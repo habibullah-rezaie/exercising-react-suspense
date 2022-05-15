@@ -49,7 +49,12 @@ function App() {
       <hr />
       <div className="pokemon-info">
         {pokemonResource ? (
-          <PokemonErrorBoundary>
+          <PokemonErrorBoundary
+            onReset={() => {
+              setPokemonName('')
+            }}
+            resetKeys={[pokemonResource]}
+          >
             <React.Suspense
               fallback={<>{<PokemonInfoFallback name={pokemonName} />}</>}
             >
