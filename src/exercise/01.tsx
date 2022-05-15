@@ -3,37 +3,7 @@
 
 import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonErrorBoundary} from '../pokemon'
-
-function createResource<ResourceType>(promise: Promise<ResourceType>) {
-  let data: ResourceType | null = null
-  let fetchErr: Error | null = null
-
-  let status: 'pending' | 'resolved' | 'rejected' = 'pending'
-
-  promise.then(
-    dt => {
-      status = 'resolved'
-      data = dt
-    },
-    err => {
-      status = 'rejected'
-      fetchErr = err
-    },
-  )
-
-  return {
-    read() {
-      switch (status) {
-        case 'pending':
-          throw promise
-        case 'rejected':
-          throw fetchErr
-        default:
-          return data
-      }
-    },
-  }
-}
+import {createResource} from '../utils'
 
 const pokemonResource = createResource(fetchPokemon('Pikachu'))
 
