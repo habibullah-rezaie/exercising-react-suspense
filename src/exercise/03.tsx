@@ -11,7 +11,9 @@ import {
 } from '../pokemon'
 import {createResource} from '../utils'
 
-function PokemonInfo({pokemonResource}) {
+type PokemonResource = ReturnType<typeof createResource>
+
+function PokemonInfo({pokemonResource}: {pokemonResource: PokemonResource}) {
   const pokemon = pokemonResource.read()
   return (
     <div>
@@ -27,7 +29,7 @@ function PokemonInfo({pokemonResource}) {
 // whatever feels right to you, then try it out and tweak it until you're happy
 // with the experience.
 
-function createPokemonResource(pokemonName) {
+function createPokemonResource(pokemonName: string) {
   // 🦉 once you've finished the exercise, play around with the delay...
   // the second parameter to fetchPokemon is a delay so you can play around
   // with different timings
@@ -48,7 +50,8 @@ function createPokemonResource(pokemonName) {
 function App() {
   const [pokemonName, setPokemonName] = React.useState('')
   // 🐨 add a useTransition hook here
-  const [pokemonResource, setPokemonResource] = React.useState(null)
+  const [pokemonResource, setPokemonResource] =
+    React.useState<PokemonResource | null>(null)
 
   React.useEffect(() => {
     if (!pokemonName) {
@@ -60,7 +63,7 @@ function App() {
     // 🐨 add startTransition to the deps list here
   }, [pokemonName])
 
-  function handleSubmit(newPokemonName) {
+  function handleSubmit(newPokemonName: string) {
     setPokemonName(newPokemonName)
   }
 
